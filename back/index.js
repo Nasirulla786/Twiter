@@ -3,29 +3,26 @@ import ConnectDb from "./config/db.js";
 import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import postRouter from "./routes/post.routes.js";
+import cors from "cors";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 
-
-app.use(express.json()) 
+app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
+app.use("/api/auth", authRouter);
+app.use("/api/post", postRouter);
 
-
-app.use("/api/auth" , authRouter);
-app.use("/api/post" , postRouter)
-
-
-
-
-
-
-
-
-app.listen(3000 , function(){
-    ConnectDb();
-    console.log("server is running");
-})
+app.listen(3000, function () {
+  ConnectDb();
+  console.log("server is running");
+});

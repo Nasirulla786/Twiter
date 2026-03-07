@@ -22,8 +22,15 @@ export const Register = async (req, res) => {
       password: hashPassword,
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.cookie("token", token);
+
+    let token;
+
+    token = jwt.sign({id:user._id}, process.env.JWT_SECRET , {expiresIn:"2d"})
+    res.cookie("token" , token)
+
+
+
+
 
     return res.status(200).json({ data: user });
   } catch (error) {
@@ -48,7 +55,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "incoreect pasword" });
     }
 
-    const token = jwt.sign({ id: checkEmail._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: checkEmail._id }, process.env.JWT_SECRET , {expiresIn:"2d"});
     res.cookie("token", token);
 
     return res.status(200).json({ data: checkEmail });
@@ -59,7 +66,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    
+
     await res.clearCookie("token");
 
     return res.status(200).json({ message: "logout successfully" });
@@ -67,3 +74,20 @@ export const logout = async (req, res) => {
     console.log(error);
   }
 };
+
+
+export const getCurrentUser  = async(req , res)=>{
+  try {
+    const userId = req.userId
+    const user = await User.findById(userId);
+    if(!user){
+      return res.status(400).json({message:"user not found"});
+    }
+
+    return res.status(200).json({data:user});
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
