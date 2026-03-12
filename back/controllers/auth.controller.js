@@ -26,7 +26,11 @@ export const Register = async (req, res) => {
     let token;
 
     token = jwt.sign({id:user._id}, process.env.JWT_SECRET , {expiresIn:"2d"})
-    res.cookie("token" , token)
+    res.cookie("token" , token ,{
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    })
 
 
 
@@ -56,7 +60,11 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: checkEmail._id }, process.env.JWT_SECRET , {expiresIn:"2d"});
-    res.cookie("token", token);
+    res.cookie("token", token ,{
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
 
     return res.status(200).json({ data: checkEmail });
   } catch (error) {
