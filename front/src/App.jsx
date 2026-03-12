@@ -15,7 +15,12 @@ import Search from "./pages/Search";
 
 
 // export const ServerUrl = "http://localhost:3000"
-export const ServerUrl = "https://twiter-pdqc.onrender.com"
+export const ServerUrl =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://twiter-pdqc.onrender.com";
+
+axios.defaults.withCredentials = true;
 function App() {
   const { userData } = useSelector((state) => state.user);
   const { savePost } = useSelector((state) => state.post);
