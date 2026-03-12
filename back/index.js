@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT  || 8000
 
 app.use(express.json());
 app.use(cookieParser());
@@ -22,7 +23,7 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 
-app.listen(3000, function () {
+app.listen(port, function () {
   ConnectDb();
   console.log("server is running");
 });
