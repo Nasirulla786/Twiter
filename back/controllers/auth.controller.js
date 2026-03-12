@@ -91,3 +91,38 @@ export const getCurrentUser  = async(req , res)=>{
 
   }
 }
+
+export const searchUsers = async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    // Search users by name (case-insensitive)
+    const users = await User.find({
+      name: { $regex: query, $options: 'i' }
+    }).select('name email _id').limit(10); // Limit results to 10
+
+    return res.status(200).json({ data: users });
+  } catch (error) {
+    console.log("Search users error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+export const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId).select('name email _id');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ data: user });
+  } catch (error) {
+    console.log("Get user by ID error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

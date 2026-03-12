@@ -1,4 +1,20 @@
 @import "tailwindcss";
+
+:root {
+  --twitter-blue: #1d9bf0;
+  --twitter-blue-hover: #1a8cd8;
+  --twitter-blue-light: rgba(29, 155, 240, 0.1);
+  --bg-primary: #000000;
+  --bg-secondary: #16181c;
+  --bg-hover: #1d1f23;
+  --border-color: #2f3336;
+  --text-primary: #e7e9ea;
+  --text-secondary: #71767b;
+  --trends-bg: #16181c;
+  --error: #f4212e;
+  --success: #00ba7c;
+}
+
 /* hide scrollbar but allow scroll */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -7,4 +23,48 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Twitter-style focus ring */
+input:focus, button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--twitter-blue);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tweet hover */
+.tweet-card:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Responsive container for main content */
+.main-middle {
+  min-width: 0;
+  max-width: 600px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .main-middle {
+    width: 100%;
+    max-width: 600px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+  }
+}
+
+@media (min-width: 1280px) {
+  .main-middle {
+    width: 600px;
+  }
 }

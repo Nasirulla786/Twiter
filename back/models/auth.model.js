@@ -13,6 +13,16 @@ const userSchema = new mongoose.Schema({
         type:String
     },
 
+    saved:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"PostModel"
+        }
+    ]
+
+
+
+
 }, { timestamps: true });
 
 
